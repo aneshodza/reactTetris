@@ -114,10 +114,16 @@ export default function Field() {
             if (figure.state === 0) {
                 setFigure({...figure, state: 1, position: [figure.position[0]-9, figure.position[1]+11, figure.position[2], figure.position[3]+9]})
             } else if (figure.state === 1) {
+                if (figure.position.filter(i => i.toString().charAt(i.toString().length - 1) === '0').length > 0) {
+                    figure.position = figure.position.map(p => p+1)
+                }
                 setFigure({...figure, state: 2, position: [figure.position[0]+11, figure.position[1]+9, figure.position[2], figure.position[3]-11]})
             } else if (figure.state === 2) {
                 setFigure({...figure, state: 3, position: [figure.position[0]+9, figure.position[1]-11, figure.position[2], figure.position[3]-9]})
             } else if (figure.state === 3) {
+                if (figure.position.filter(i => i.toString().charAt(i.toString().length - 1) === '9').length > 0) {
+                    figure.position = figure.position.map(p => p-1)
+                }
                 setFigure({...figure, state: 0, position: [figure.position[0]-11, figure.position[1]-9, figure.position[2], figure.position[3]+11]})
             }
         }

@@ -33,6 +33,19 @@ export default function Field() {
         )
     }
 
+    const checkDelete = () => {
+        let tempPos = usedPos
+        for (let i = 19; i > 0; i--) {
+            if (checker(tempPos, rangeArray(i*10, i*10+9))) {
+                tempPos.sort()
+                tempPos = tempPos.filter(v => v < i*10 || v > i*10+9)
+                tempPos = tempPos.map(v => v < i*10 ? v+10 : v)
+                
+            }
+        }
+        setUsedPos(tempPos)
+    }
+
     wPress = () => {
         if (figure.name === 'I') {
             if (figure.state === 0) {
@@ -144,15 +157,7 @@ export default function Field() {
 
     gameMove = () => {
         sPress()
-        for (let i = 19; i > 0; i--) {
-            if (checker(usedPos, rangeArray(i*10, i*10+9))) {
-                let tempPos = usedPos
-                tempPos.sort()
-                tempPos = tempPos.filter(v => v < i*10 || v > i*10+9)
-                tempPos = tempPos.map(v => v < i*10 ? v+10 : v)
-                setUsedPos(tempPos)
-            }
-        }
+        checkDelete()
     }
 
     

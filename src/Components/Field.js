@@ -35,15 +35,19 @@ export default function Field() {
 
     const checkDelete = () => {
         let tempPos = usedPos
+        let deletionIndex = [null, null]
         for (let i = 19; i > 0; i--) {
             if (checker(tempPos, rangeArray(i*10, i*10+9))) {
-                tempPos.sort()
+                tempPos = tempPos.sort()
                 tempPos = tempPos.filter(v => v < i*10 || v > i*10+9)
-                tempPos = tempPos.map(v => v < i*10 ? v+10 : v)
-                
+                if (deletionIndex[0] === null) {
+                    deletionIndex[0] = i
+                }
+                deletionIndex[1] = i
             }
         }
-        setUsedPos(tempPos)
+        tempPos = tempPos.map(v => v < deletionIndex[1]*10 ? v+deletionIndex[0]*10-deletionIndex[1]*10+10 : v) 
+        return tempPos
     }
 
     wPress = () => {
@@ -143,9 +147,8 @@ export default function Field() {
             setFigure({ ...figure, position: figure.position.map(v => v + 10) })
         } else {
             usedPos.push(figure.position[0], figure.position[1], figure.position[2], figure.position[3])
+            setUsedPos(checkDelete())
             setFigure(figures[Math.floor(7 * Math.random())])
-            console.log(usedPos)
-            console.log(usedPos.length !== new Set(usedPos).size)
             if (usedPos.length !== new Set(usedPos).size) {
                 window.location.reload()
             }
@@ -159,11 +162,6 @@ export default function Field() {
                 setFigure({ ...figure, position: figure.position.map(v => v + 1) })
             }
         }
-    }
-
-    gameMove = () => {
-        sPress()
-        checkDelete()
     }
 
     
@@ -184,11 +182,11 @@ window.addEventListener("keypress", (e) => {
     } else if (e.code === 'KeyA') {
         aPress()
     } else if (e.code === 'KeyS') {
-        gameMove()
+        sPress()
     } else if (e.code === 'KeyW') {
         wPress()
     }
 })
 
-setInterval(() => gameMove(), 1000)
+setInterval(() => sPress(), 1000)
 

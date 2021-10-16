@@ -2,8 +2,8 @@ export default function Score(props) {
 
     return (
         <div className="score">
-            <h4>Points: {props.points}</h4>
-            <h4>Lines: {props.lines}</h4>
+            <h2>Points: {props.points}</h2>
+            <h2>Lines: {props.lines}</h2>
         </div>
     )
 }

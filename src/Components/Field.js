@@ -174,7 +174,7 @@ export default function Field() {
             usedPos.push(figure.position[0], figure.position[1], figure.position[2], figure.position[3])
             setUsedPos(checkDelete())
             setFigure(figures[Math.floor(7 * Math.random())])
-            if (usedPos.length !== new Set(usedPos).size) {
+            if (usedPos.filter(v => v < 40).length !== new Set(usedPos.filter(v => v < 40)).size) {
                 window.location.reload()
             }
         }

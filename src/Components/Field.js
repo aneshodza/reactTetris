@@ -17,6 +17,7 @@ export default function Field() {
         new Figure('S', [13, 4, 14, 5], 'blue', 0),
         new Figure('T', [13, 4, 14, 15], 'blue', 0)
     ])
+
     const [figure, setFigure] = useState(figures[Math.floor(7 * Math.random())])
     const [usedPos, setUsedPos] = useState([])
 
@@ -64,6 +65,8 @@ export default function Field() {
                 case 3:
                     setPoints(points + 120)
                     break
+                default:
+                    break
             }
             setLines(lines + deletionIndex[0] - deletionIndex[1] + 1)
             speed = Math.floor((lines + deletionIndex[0] - deletionIndex[1] + 1)/10)*30
@@ -78,6 +81,11 @@ export default function Field() {
     wPress = () => {
         if (figure.name === 'I') {
             if (figure.state === 0) {
+                if (figure.position[3] + 10 > 199 || usedPos.includes(figure.position[3] + 10)) {
+                    figure.position = figure.position.map(p => p - 20)
+                } else if (figure.position[3] + 20 > 199 || usedPos.includes(figure.position[3] + 20)) {
+                    figure.position = figure.position.map(p => p - 10)
+                }
                 setFigure({ ...figure, state: 1, position: [figure.position[0] - 8, figure.position[1] + 1, figure.position[2] + 10, figure.position[3] + 19] })
             } else if (figure.state === 1) {
                 if (figure.position.filter(i => i.toString().charAt(i.toString().length - 1) === '0').length > 0) {
